@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace CatKeeper.FinalCharacterController.Scripts
+namespace CatKeeper.FinalCharacterController
 {
     [DefaultExecutionOrder(-2)]
     public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomotionMapActions

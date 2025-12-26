@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CatKeeper.FinalCharacterController.Scripts
+namespace CatKeeper.FinalCharacterController
 {
     [DefaultExecutionOrder(-1)]
     public class PlayerController : MonoBehaviour
@@ -20,6 +20,8 @@ namespace CatKeeper.FinalCharacterController.Scripts
         public float lookLimitV = 89f;
 
         private PlayerLocomotionInput _playerLocomotionInput;
+        private PlayerState _playerState;
+        
         private Vector2 _cameraRotation = Vector2.zero;
         private Vector2 _playerTargetRotation = Vector2.zero;
 
@@ -28,6 +30,16 @@ namespace CatKeeper.FinalCharacterController.Scripts
             _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
         }
         private void Update()
+        {
+            HandleLateralMovements();
+            UpdateMovementState();
+        }
+
+        private void UpdateMovementState()
+        {
+            bool isMovementInput = _playerLocomotionInput.MovementInput != Vector2.zero;
+        }
+        private void HandleLateralMovements()
         {
             Vector3 cameraForwardXZ = new Vector3(_playerCamera.transform.forward.x, 0f, _playerCamera.transform.forward.z).normalized;
             Vector3 cameraRightXZ = new Vector3(_playerCamera.transform.right.x, 0f, _playerCamera.transform.right.z).normalized;
@@ -44,7 +56,6 @@ namespace CatKeeper.FinalCharacterController.Scripts
             // Move character (Unity suggests only calling this once per tick)
             _characterController.Move(newVelocity * Time.deltaTime);
         }
-
         private void LateUpdate()
         {
             //New Input System ile elde ettiğimiz mouse hareketi bilgisini kameraya atıyoruz
@@ -55,6 +66,11 @@ namespace CatKeeper.FinalCharacterController.Scripts
             transform.rotation = Quaternion.Euler(0f, _playerTargetRotation.x, 0f);
 
             _playerCamera.transform.rotation = Quaternion.Euler(_cameraRotation.y, _cameraRotation.x, 0f);
+        }
+
+        private void IsMovingLaterally()
+        {
+            Vector3 lateralVelocity = new  Vector3(_characterController.velocity.x, 0f, _characterController.velocity.y);
         }
     }
 }

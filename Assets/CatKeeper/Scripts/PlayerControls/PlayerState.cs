@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CatKeeper.FinalCharacterController
+namespace CatKeeper.Scripts
 {
     public enum PlayerMovementState
     {
@@ -14,12 +14,12 @@ namespace CatKeeper.FinalCharacterController
     }
     public class PlayerState : MonoBehaviour
     {
-        [Header("Debug Info DO NOT CHANGE")]
-        [field: SerializeField] public PlayerMovementState CurrentPlayerMovementState { get; private set; } = PlayerMovementState.Idle;
-
+        [field:SerializeField] public PlayerMovementState CurrentPlayerMovementState {get; private set;} =  PlayerMovementState.Idle;
+        
         public void SetPlayerMovementState(PlayerMovementState playerMovementState)
         {
             CurrentPlayerMovementState = playerMovementState;
         }
+        
     }
 }

@@ -402,49 +402,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 25, y: 1, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1760408000 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8241262103065029402, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
-  m_PrefabInstance: {fileID: 1684356643382706758}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1760408004 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2919930137951624780, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
-  m_PrefabInstance: {fileID: 1684356643382706758}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1760408006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1760408000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d54e44277b7d12d4f896565b2ff8ad5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.FinalCharacterController.PlayerState
-  <CurrentPlayerMovementState>k__BackingField: 0
---- !u!114 &1760408007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1760408000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf5b7287dbc21b47ac7ffe12706b5e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.FinalCharacterController.PlayerAnimation
-  _animator: {fileID: 1760408004}
-  locomotionBlendSpeed: 10
---- !u!1001 &1684356643382706758
+--- !u!1001 &693083570377041219
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -452,61 +415,113 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.7666807
+      value: 5.2373457
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.785
+      value: 0.49999997
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.6705837
+      value: 4.301105
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865781565234497081, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 2917100827392669262, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8241262103065029402, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - target: {fileID: 5764397796878741233, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_Name
-      value: TPSHuman
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8241262103065029402, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 5764397796878741233, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1760408007}
-    - targetCorrespondingSourceObject: {fileID: 8241262103065029402, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+      addedObject: {fileID: 8886046242420846958}
+    - targetCorrespondingSourceObject: {fileID: 5764397796878741233, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1760408006}
-  m_SourcePrefab: {fileID: 100100000, guid: c03324cfbe8bb994487b8427b6d0b1e3, type: 3}
+      addedObject: {fileID: 8886046242420846957}
+    - targetCorrespondingSourceObject: {fileID: 5764397796878741233, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8886046242420846956}
+  m_SourcePrefab: {fileID: 100100000, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
+--- !u!95 &6696535680317604534 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 827621718227672553, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
+  m_PrefabInstance: {fileID: 693083570377041219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8886046242420846953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5764397796878741233, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
+  m_PrefabInstance: {fileID: 693083570377041219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8886046242420846956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8886046242420846953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb9796a18f4685408f1c12445e44480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerState
+  <CurrentPlayerMovementState>k__BackingField: 0
+--- !u!114 &8886046242420846957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8886046242420846953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f06dc9a9a39844aa3a4071f65694fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerAnimation
+  animator: {fileID: 6696535680317604534}
+  locomotionBlendSpeed: 10
+--- !u!114 &8886046242420846958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8886046242420846953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a37164d34f9f541957f4509268cdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerLocomotionInput
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -514,4 +529,4 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1698733246}
-  - {fileID: 1684356643382706758}
+  - {fileID: 693083570377041219}

@@ -9,6 +9,8 @@ namespace CatKeeper.Scripts
         public PlayerControls PlayerControls { get; private set; }
         public Vector2 MovementInput { get; private set; }
         public Vector2 LookInput { get; private set; }
+
+        public bool InteractTriggered;
         
         private void OnEnable()
         {
@@ -28,12 +30,20 @@ namespace CatKeeper.Scripts
         public void OnMovement(InputAction.CallbackContext context)
         {
             MovementInput = context.ReadValue<Vector2>();
-            print(MovementInput);
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
             LookInput = context.ReadValue<Vector2>();
         }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                InteractTriggered = true;
+            }
+        }
+        
     }
 }

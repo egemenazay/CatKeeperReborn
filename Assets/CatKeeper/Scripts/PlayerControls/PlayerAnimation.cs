@@ -12,7 +12,6 @@ namespace CatKeeper.Scripts
 
         private static int inputXHash = Animator.StringToHash("inputX");
         private static int inputYHash = Animator.StringToHash("inputY");
-        private static int inputMagnitudeHash = Animator.StringToHash("inputMagnitude");
         
         private Vector3 currentBlendInput = Vector3.zero;
 
@@ -33,7 +32,6 @@ namespace CatKeeper.Scripts
 
             animator.SetFloat(inputXHash, currentBlendInput.x);
             animator.SetFloat(inputYHash, currentBlendInput.y);
-            animator.SetFloat(inputMagnitudeHash, currentBlendInput.magnitude);
             
             playerState.SetPlayerMovementState(PlayerMovementState.Walking);
         }

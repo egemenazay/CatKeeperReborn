@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace CatKeeper.Scripts
 {
@@ -8,31 +8,34 @@ namespace CatKeeper.Scripts
         private CharacterController controller;
         private PlayerLocomotionInput playerLocomotionInput;
         private PlayerState playerState;
-
-        // --- Ayarlar ---
+        private PlayerInteraction playerInteraction;
+        
         [Header("Movement Settings")] 
         public float moveSpeed = 5f;
 
         [Header("Look Settings")] 
         public float mouseSensitivity = 15f;
         
-        public Transform cameraTransform; // Kamerayı buraya sürükleyeceğiz
+        public Transform cameraTransform;
 
-        // --- Değişkenler ---
         private Vector2 moveInput;
         private Vector2 lookInput;
+        
         private float xRotation = 0f;
         
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
             playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
+            playerState = GetComponent<PlayerState>();
+            playerInteraction = GetComponent<PlayerInteraction>();
         }
 
         private void Update()
         {
             ReadInputs();
-
+            
+            HandlePickUp();
             HandleMovement();
             HandleLook();
         }
@@ -62,6 +65,15 @@ namespace CatKeeper.Scripts
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
             
             cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        }
+
+        private void HandlePickUp()
+        {
+            if (playerLocomotionInput.InteractTriggered) 
+            {
+                playerInteraction.TryPickUp();
+                playerLocomotionInput.InteractTriggered = false;
+            }
         }
     }
 }

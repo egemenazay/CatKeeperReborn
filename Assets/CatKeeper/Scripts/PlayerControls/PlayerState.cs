@@ -6,19 +6,25 @@ namespace CatKeeper.Scripts
     {
         Idle = 0,
         Walking = 1,
-        Running = 2,
-        Sprinting = 3,
-        Jumping = 4,
-        Falling = 5,
-        Strafing = 6,
     }
+    public enum PlayerHandState 
+    {
+        Empty = 0,
+        Holding = 1,
+    }
+    
     public class PlayerState : MonoBehaviour
     {
         [field:SerializeField] public PlayerMovementState CurrentPlayerMovementState {get; private set;} =  PlayerMovementState.Idle;
+        [field:SerializeField] public PlayerHandState CurrentPlayerHandState {get; private set;} =  PlayerHandState.Empty;
         
         public void SetPlayerMovementState(PlayerMovementState playerMovementState)
         {
             CurrentPlayerMovementState = playerMovementState;
+        }
+        public void SetPlayerHandState(PlayerHandState playerHandState)
+        {
+            CurrentPlayerHandState = playerHandState;
         }
         
     }

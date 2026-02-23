@@ -2447,7 +2447,7 @@ Transform:
   m_GameObject: {fileID: 3882270713371832681}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.11000013, z: 0.8}
+  m_LocalPosition: {x: 0, y: -0.1, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3848,8 +3848,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f06dc9a9a39844aa3a4071f65694fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerAnimation
-  animator: {fileID: 827621718227672553}
   locomotionBlendSpeed: 10
+  animator: {fileID: 827621718227672553}
 --- !u!114 &894057693496440440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3876,8 +3876,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c304cb24d31ec43bbfcdf2e59f9edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerInteraction
-  pickUpRange: 15
-  holdPosition: {fileID: 6228159129573994370}
+  pickUpRange: 4
+  objectGrabPointTransform: {fileID: 6228159129573994370}
   playerCameraTransform: {fileID: 6575680925953488829}
   pickUpLayerMask:
     serializedVersion: 2

@@ -50,7 +50,7 @@ namespace CatKeeper.Scripts
 
                 // Objeyi hedefe doğru fırlatır gibi hız veriyoruz.
                 // Mesafe ne kadar fazlaysa o kadar hızlı çeker (Yay etkisi)
-                objectRigidbody.velocity = direction * followSpeed * distance; // 15f çarpanıyla oynayabilirsin
+                objectRigidbody.linearVelocity = direction * followSpeed * distance; // 15f çarpanıyla oynayabilirsin
 
                 // ---------------- ROTASYON HESAPLAMASI (DİK DURMA) ----------------
                 

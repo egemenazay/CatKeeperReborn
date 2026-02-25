@@ -7,27 +7,31 @@ namespace CatKeeper.Scripts
     {
         private CharacterController controller;
         private PlayerLocomotionInput playerLocomotionInput;
-        private PlayerState playerState;
         private PlayerInteraction playerInteraction;
         
-        [Header("Movement Settings")] 
-        public float moveSpeed = 5f;
-
-        [Header("Look Settings")] 
-        public float mouseSensitivity = 15f;
+        [Header("References")]
+        [SerializeField] private Transform cameraTransform;
         
-        public Transform cameraTransform;
-
+        [Header("Movement Settings")] 
         private Vector2 moveInput;
         private Vector2 lookInput;
+        private float gravity = 9.8f;
+        private float velocity;
+        [SerializeField] private float gravityMultiplier = 2.5f;
+        [SerializeField] private float moveSpeed = 5f;
+        
+        [Header("Look Settings")] 
+        [SerializeField]private float mouseSensitivity = 15f;
+        
+
         
         private float xRotation = 0f;
+        
         
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
             playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
-            playerState = GetComponent<PlayerState>();
             playerInteraction = GetComponent<PlayerInteraction>();
         }
 
@@ -48,10 +52,10 @@ namespace CatKeeper.Scripts
 
         private void HandleMovement()
         {
-            Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y).normalized; //Unity'de X ekseni sağ ve sol; Z ekseni ileri geriyi temsil ediyor 
-
+            Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y).normalized;
+            velocity += gravity * gravityMultiplier * Time.deltaTime;
+            move.y = velocity;
             controller.Move(move * moveSpeed * Time.deltaTime);
-            
         }
 
         private void HandleLook()

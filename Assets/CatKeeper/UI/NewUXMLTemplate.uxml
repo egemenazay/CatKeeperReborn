@@ -1,0 +1,4 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/CatKeeper/UI/progress_bar.uss?fileID=7433441132597879392&amp;guid=a73fff1e814cd534fb847fdf22f099f1&amp;type=3#progress_bar"/>
+    <ui:ProgressBar value="0" title="my-progress" style="height: 38px; width: 482px;"/>
+</ui:UXML>

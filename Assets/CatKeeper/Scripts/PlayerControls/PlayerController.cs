@@ -15,7 +15,7 @@ namespace CatKeeper.Scripts
         [Header("Movement Settings")] 
         private Vector2 moveInput;
         private Vector2 lookInput;
-        private float gravity = 9.8f;
+        private float gravity = -10f;
         private float velocity;
         [SerializeField] private float gravityMultiplier = 2.5f;
         [SerializeField] private float moveSpeed = 5f;

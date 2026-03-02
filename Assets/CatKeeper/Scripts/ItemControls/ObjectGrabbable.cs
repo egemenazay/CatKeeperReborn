@@ -8,7 +8,6 @@ namespace CatKeeper.Scripts
         private Rigidbody objectRigidbody;
         private Transform objectGrabPointTransform;
         [SerializeField] private float followSpeed = 15f;
-
         private void Awake()
         {
             objectRigidbody = GetComponent<Rigidbody>();
@@ -34,7 +33,13 @@ namespace CatKeeper.Scripts
             objectRigidbody.angularDamping = 0.05f;
         }
 
-        private void HandleObjectPosition()
+        [Obsolete("Obsolete")]
+        private void FixedUpdate()
+        {
+           HandeObjectPosition();
+        }
+
+        private void HandeObjectPosition()
         {
             if (objectGrabPointTransform != null)
             {

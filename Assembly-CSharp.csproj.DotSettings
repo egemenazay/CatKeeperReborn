@@ -2,4 +2,5 @@
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Ccatkeeper_005Cfinalcharactercontroller_005Cscripts/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Ccatkeeper_005Cscripts_005Cgamecontrols/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Ccatkeeper_005Cscripts_005Cplayercontrols/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Ccatkeeper_005Cscripts_005Cu_0131/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Ccatkeeper_005Cscripts_005C_0131temcontrols/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

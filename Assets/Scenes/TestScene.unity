@@ -381,6 +381,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 584625751}
+  - component: {fileID: 584625752}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -403,6 +404,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &584625752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584625750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0758b832ee8d2b4594fcdb3ade2cfa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.MessManager
+  messSlider: {fileID: 29510248}
+  maxMessPoints: 100
 --- !u!1 &599526107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1039,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &870514036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 870514039}
+  - component: {fileID: 870514038}
+  - component: {fileID: 870514037}
+  m_Layer: 2
+  m_Name: Cube (1)
+  m_TagString: PlaceZone
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &870514037
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870514036}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.34415329, z: 1}
+  m_Center: {x: 0, y: 0.32792336, z: 0}
+--- !u!33 &870514038
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870514036}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &870514039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870514036}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.34499997, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1127745326}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &990959657 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6575680925953488829, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
@@ -1213,7 +1290,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.856, z: 1.789}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 870514039}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1281618879
@@ -1305,6 +1383,7 @@ GameObject:
   - component: {fileID: 1612850553}
   - component: {fileID: 1612850552}
   - component: {fileID: 1612850557}
+  - component: {fileID: 1612850558}
   m_Layer: 0
   m_Name: Item
   m_TagString: Pickable
@@ -1445,6 +1524,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.ObjectGrabbable
   followSpeed: 15
+--- !u!114 &1612850558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612850551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6265eacea6a294243b79e3bc63aa4ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.ItemMessState
+  messPenalty: 10
 --- !u!1 &1698733242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,6 +1954,10 @@ PrefabInstance:
     - target: {fileID: 6989718922702262538, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8514040102503809436, guid: 0811f714524b3cd42bb125290397deb8, type: 3}
+      propertyPath: pickUpLayerMask.m_Bits
+      value: 51
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

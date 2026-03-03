@@ -3,6 +3,13 @@ using static CatKeeper.Scripts.GameTags;
 
 namespace CatKeeper.Scripts
 {
+    public static class GameTags
+    {
+        public const string Floor = "Floor";
+        public const string PlaceZone = "PlaceZone";
+        public const string Pickable = "Pickable";
+        public const string Player = "Player";
+    }
     public class ItemMessState : MonoBehaviour
     {
         [Header("Dağınıklık Ayarları")]
@@ -12,7 +19,7 @@ namespace CatKeeper.Scripts
         
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag(GameTags.Floor) && !isMessy)
+            if (collision.gameObject.CompareTag(Floor) && !isMessy)
             {
                 isMessy = true;
                 MessManager.Instance.AddMess(messPenalty);
@@ -22,10 +29,9 @@ namespace CatKeeper.Scripts
         // Görünmez bir alanın (Zone) içine girdiğinde çalışır
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("PlaceZone") && isMessy)
+            if (other.CompareTag(PlaceZone) && isMessy)
             {
                 isMessy = false;
-                Debug.Log("Eşya yerine kondu! Dağınıklık azalıyor.");
                 MessManager.Instance.AddMess(-messPenalty);
             }
         }

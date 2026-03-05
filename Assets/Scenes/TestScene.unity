@@ -1051,7 +1051,7 @@ GameObject:
   - component: {fileID: 870514038}
   - component: {fileID: 870514037}
   m_Layer: 2
-  m_Name: Cube (1)
+  m_Name: Detection Zone
   m_TagString: PlaceZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1194,7 +1194,7 @@ GameObject:
   - component: {fileID: 1127745324}
   - component: {fileID: 1127745323}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1537,6 +1537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.ItemMessState
   messPenalty: 10
+  restVelocityThreshold: 0.5
 --- !u!1 &1698733242
 GameObject:
   m_ObjectHideFlags: 0

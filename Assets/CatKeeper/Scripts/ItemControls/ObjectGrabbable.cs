@@ -24,6 +24,8 @@ namespace CatKeeper.Scripts
             objectRigidbody.angularDamping = 5f;
         }
 
+        public bool IsGrabbed => objectGrabPointTransform != null;
+        
         public void Drop()
         {
             objectGrabPointTransform = null;

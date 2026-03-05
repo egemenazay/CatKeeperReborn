@@ -15,8 +15,19 @@ namespace CatKeeper.Scripts
         [Header("Dağınıklık Ayarları")]
         public float messPenalty = 10f;
         
-        private bool isMessy = false; 
+        [Header("Yerleştirme Ayarları")]
+        [SerializeField] private float restVelocityThreshold = 0.5f;
         
+        private bool isMessy = false;
+        private ObjectGrabbable objectGrabbable;
+        private Rigidbody objectRigidbody;
+
+        private void Awake()
+        {
+            objectGrabbable = GetComponent<ObjectGrabbable>();
+            objectRigidbody = GetComponent<Rigidbody>();
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.CompareTag(Floor) && !isMessy)
@@ -26,14 +37,16 @@ namespace CatKeeper.Scripts
             }
         }
 
-        // Görünmez bir alanın (Zone) içine girdiğinde çalışır
-        private void OnTriggerEnter(Collider other)
+        // Obje zone içinde kaldığı sürece her physics frame'de çalışır
+        private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag(PlaceZone) && isMessy)
-            {
-                isMessy = false;
-                MessManager.Instance.AddMess(-messPenalty);
-            }
+            if (!other.CompareTag(PlaceZone)) return;
+            if (!isMessy) return;
+            if (objectGrabbable.IsGrabbed) return;
+            if (objectRigidbody.linearVelocity.sqrMagnitude > restVelocityThreshold * restVelocityThreshold) return;
+
+            isMessy = false;
+            MessManager.Instance.AddMess(-messPenalty);
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CatKeeper.Scripts
 {
-    public class PlayerInteraction : MonoBehaviour
+    public class HumanPlayerInteraction : MonoBehaviour
     {
         [Header("Settings")]
         public float pickUpRange = 3f;

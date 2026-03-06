@@ -6,8 +6,7 @@ namespace CatKeeper.Scripts
     public class PlayerController : MonoBehaviour
     {
         private CharacterController controller;
-        private PlayerLocomotionInput playerLocomotionInput;
-        private PlayerInteraction playerInteraction;
+        protected PlayerLocomotionInput playerLocomotionInput;
         
         [Header("References")]
         [SerializeField] private Transform cameraTransform;
@@ -28,18 +27,16 @@ namespace CatKeeper.Scripts
         private float xRotation = 0f;
         
         
-        private void Awake()
+        protected virtual void Awake()
         {
             controller = GetComponent<CharacterController>();
             playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
-            playerInteraction = GetComponent<PlayerInteraction>();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             ReadInputs();
             
-            HandlePickUp();
             HandleMovement();
             HandleLook();
         }
@@ -52,10 +49,20 @@ namespace CatKeeper.Scripts
 
         private void HandleMovement()
         {
+            if (controller.isGrounded && velocity < 0)
+            {
+                // Tam sıfır yerine küçük bir negatif değer (-2f gibi) 
+                // vermek yerle teması (grounding) daha stabil tutar.
+                velocity = -2f; 
+            }
+
             Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y).normalized;
+            
             velocity += gravity * gravityMultiplier * Time.deltaTime;
-            move.y = velocity;
-            controller.Move(move * moveSpeed * Time.deltaTime);
+            Vector3 finalMove = move * moveSpeed;
+            finalMove.y = velocity;
+
+            controller.Move(finalMove * Time.deltaTime);
         }
 
         private void HandleLook()
@@ -69,15 +76,6 @@ namespace CatKeeper.Scripts
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
             
             cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        }
-
-        private void HandlePickUp()
-        {
-            if (playerLocomotionInput.InteractTriggered) 
-            {
-                playerInteraction.TryPickUp();
-                playerLocomotionInput.InteractTriggered = false;
-            }
         }
     }
 }

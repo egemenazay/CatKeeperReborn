@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CatKeeper.Scripts
 {
-    public class PlayerAnimation : MonoBehaviour
+    public class HumanPlayerAnimation : MonoBehaviour
     {
         [Header("Settings")]
         [SerializeField] private float locomotionBlendSpeed = 4f;

@@ -3732,7 +3732,7 @@ GameObject:
   - component: {fileID: 2917100827392669262}
   - component: {fileID: 827621718227672553}
   - component: {fileID: 3398308255510735479}
-  - component: {fileID: 2235881067598201696}
+  - component: {fileID: 5953372045216534006}
   - component: {fileID: 8904992155454342444}
   - component: {fileID: 2263917766765008927}
   - component: {fileID: 894057693496440440}
@@ -3808,7 +3808,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.95, z: 0}
---- !u!114 &2235881067598201696
+--- !u!114 &5953372045216534006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3817,13 +3817,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5764397796878741233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d6c79871f05006459db9c4bb9315587, type: 3}
+  m_Script: {fileID: 11500000, guid: 41f47045174a6cf4196618ecb134fbc9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerController
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.HumanPlayerController
   cameraTransform: {fileID: 6575680925953488829}
-  gravityMultiplier: 0.05
+  gravityMultiplier: 5
   moveSpeed: 5
-  mouseSensitivity: 15
+  mouseSensitivity: 10
 --- !u!114 &8904992155454342444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3886,7 +3886,7 @@ MonoBehaviour:
   playerCameraTransform: {fileID: 6575680925953488829}
   pickUpLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 51
 --- !u!1 &5780278906439986401
 GameObject:
   m_ObjectHideFlags: 0

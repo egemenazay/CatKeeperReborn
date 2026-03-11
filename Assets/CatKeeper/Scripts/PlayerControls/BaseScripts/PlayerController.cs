@@ -1,81 +1,71 @@
-using System;
 using UnityEngine;
 
 namespace CatKeeper.Scripts
 {
     public class PlayerController : MonoBehaviour
     {
-        private CharacterController controller;
-        protected PlayerLocomotionInput playerLocomotionInput;
+        private PlayerLocomotionInput playerLocomotionInput;
+        private HumanPlayerInteraction humanPlayerInteraction;
+        private Vector2 moveInput;
         
-        [Header("References")]
+        [Header("Movement Settings")]
+        [SerializeField] private float walkSpeed = 5f;
+
+        [Header("Camera Settings")]
         [SerializeField] private Transform cameraTransform;
         
-        [Header("Movement Settings")] 
-        private Vector2 moveInput;
-        private Vector2 lookInput;
-        private float gravity = -10f;
-        private float velocity;
-        [SerializeField] private float gravityMultiplier = 2.5f;
-        [SerializeField] private float moveSpeed = 5f;
+        private Rigidbody rb;
         
-        [Header("Look Settings")] 
-        [SerializeField]private float mouseSensitivity = 15f;
-        
-
-        
-        private float xRotation = 0f;
-        
-        
-        protected virtual void Awake()
+        private void Awake()
         {
-            controller = GetComponent<CharacterController>();
             playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
+            rb = GetComponent<Rigidbody>();
+            humanPlayerInteraction = GetComponent<HumanPlayerInteraction>();
+            
+            rb.freezeRotation = true;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
 
-        protected virtual void Update()
+        private void FixedUpdate()
+        {
+            HandleMovement();
+        }
+        private void Update()
         {
             ReadInputs();
-            
-            HandleMovement();
-            HandleLook();
+            HandlePickUp();
         }
         
         private void ReadInputs()
         {
             moveInput = playerLocomotionInput.MovementInput;
-            lookInput = playerLocomotionInput.LookInput;
         }
-
         private void HandleMovement()
         {
-            if (controller.isGrounded && velocity < 0)
+            Vector3 cameraForward = cameraTransform.forward;
+            cameraForward.y = 0;
+            
+            if (cameraForward.sqrMagnitude > 0.001f)
             {
-                // Tam sıfır yerine küçük bir negatif değer (-2f gibi) 
-                // vermek yerle teması (grounding) daha stabil tutar.
-                velocity = -2f; 
+                Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+                rb.MoveRotation(targetRotation);
             }
-
-            Vector3 move = (transform.right * moveInput.x + transform.forward * moveInput.y).normalized;
             
-            velocity += gravity * gravityMultiplier * Time.deltaTime;
-            Vector3 finalMove = move * moveSpeed;
-            finalMove.y = velocity;
-
-            controller.Move(finalMove * Time.deltaTime);
+            Vector3 moveDirection = cameraTransform.forward * moveInput.y + cameraTransform.right * moveInput.x;
+            moveDirection.y = 0f;
+            rb.AddForce(moveDirection * walkSpeed, ForceMode.VelocityChange);
         }
-
-        private void HandleLook()
+        
+        //BOTTOM FUNCTIONS GONA BE ON INDIVIDUAL CHRACTERS SCRPITS FOR NOW ITS ONLY TESTING
+        private void HandlePickUp()
         {
-            float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
-            transform.Rotate(Vector3.up * mouseX);
-
-            float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
-
-            xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
             
-            cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            if (playerLocomotionInput.InteractTriggered) 
+            {
+                humanPlayerInteraction.TryPickUp();
+                playerLocomotionInput.InteractTriggered = false;
+            }
         }
     }
 }

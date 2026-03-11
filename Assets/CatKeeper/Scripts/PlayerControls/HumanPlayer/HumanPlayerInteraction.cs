@@ -24,22 +24,31 @@ namespace CatKeeper.Scripts
         public void TryPickUp()
         {
             if (playerState.CurrentPlayerHandState == PlayerHandState.Empty)
-            {
-                if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpRange, pickUpLayerMask))
-                {
-                    if (raycastHit.transform.TryGetComponent(out objectGrabbable))
-                    {
-                        objectGrabbable.Grab(objectGrabPointTransform);
-                        playerState.SetPlayerHandState(PlayerHandState.Holding);
-                    }
-                }
+            { 
+                PickUp();
             }
             else if(playerState.CurrentPlayerHandState == PlayerHandState.Holding)
             {
-                objectGrabbable.Drop();
-                objectGrabbable = null;
-                playerState.SetPlayerHandState(PlayerHandState.Empty);
+                Drop();
             }
+        }
+        
+        private void PickUp()
+        {
+            if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpRange, pickUpLayerMask))
+            {
+                if (raycastHit.transform.TryGetComponent(out objectGrabbable))
+                {
+                    objectGrabbable.Grab(objectGrabPointTransform);
+                    playerState.SetPlayerHandState(PlayerHandState.Holding);
+                }
+            }
+        }
+        private void Drop()
+        {
+            objectGrabbable.Drop();
+            objectGrabbable = null;
+            playerState.SetPlayerHandState(PlayerHandState.Empty);
         }
         
     }

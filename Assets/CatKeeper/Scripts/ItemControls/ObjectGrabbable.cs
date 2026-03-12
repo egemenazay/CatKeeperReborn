@@ -7,7 +7,9 @@ namespace CatKeeper.Scripts
     {
         private Rigidbody objectRigidbody;
         private Transform objectGrabPointTransform;
+        [Header("Object Speed Settings")]
         [SerializeField] private float followSpeed = 15f;
+        [SerializeField] private float grabbedFollowSpeed = 15f;
         private void Awake()
         {
             objectRigidbody = GetComponent<Rigidbody>();
@@ -64,7 +66,7 @@ namespace CatKeeper.Scripts
                 Quaternion targetRotation = Quaternion.Euler(0f, targetY, 0f);
 
                 // Şu anki açıdan hedef açıya yumuşak bir geçiş yap (Slerp)
-                Quaternion smoothedRotation = Quaternion.Slerp(objectRigidbody.rotation, targetRotation, Time.fixedDeltaTime * 10f);
+                Quaternion smoothedRotation = Quaternion.Slerp(objectRigidbody.rotation, targetRotation, Time.fixedDeltaTime * grabbedFollowSpeed);
                 
                 // Fiziği bozmadan döndürmek için MoveRotation kullanıyoruz
                 objectRigidbody.MoveRotation(smoothedRotation);

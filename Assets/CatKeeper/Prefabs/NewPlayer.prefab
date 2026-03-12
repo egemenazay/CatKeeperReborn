@@ -3764,11 +3764,11 @@ GameObject:
   - component: {fileID: 827621718227672553}
   - component: {fileID: 1568408978190683743}
   - component: {fileID: 7212438003428852405}
-  - component: {fileID: 3042540452765968785}
-  - component: {fileID: 8904992155454342444}
-  - component: {fileID: 894057693496440440}
+  - component: {fileID: 4517180280451688209}
   - component: {fileID: 2263917766765008927}
   - component: {fileID: 8514040102503809436}
+  - component: {fileID: 894057693496440440}
+  - component: {fileID: 8346917544264091328}
   m_Layer: 6
   m_Name: NewPlayer
   m_TagString: Untagged
@@ -3866,7 +3866,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.95, z: 0}
---- !u!114 &3042540452765968785
+--- !u!114 &4517180280451688209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3875,38 +3875,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5764397796878741233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac7c7d7687e82824c8c233405a031538, type: 3}
+  m_Script: {fileID: 11500000, guid: 0599b57350a556b48aaaef9c6e95e83c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.NewPlayerController
-  walkSpeed: 1
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.HumanPlayerController
+  walkSpeed: 5
   cameraTransform: {fileID: 5942260186950560313}
---- !u!114 &8904992155454342444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5764397796878741233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32a37164d34f9f541957f4509268cdc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerLocomotionInput
-  InteractTriggered: 0
---- !u!114 &894057693496440440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5764397796878741233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcb9796a18f4685408f1c12445e44480, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerState
-  <CurrentPlayerMovementState>k__BackingField: 0
-  <CurrentPlayerHandState>k__BackingField: 0
 --- !u!114 &2263917766765008927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3924,7 +3897,7 @@ MonoBehaviour:
   zOffset: 0
   animator: {fileID: 827621718227672553}
   headBone: {fileID: 6989718922702262538}
-  cameraTransform: {fileID: 0}
+  cameraTransform: {fileID: 5942260186950560313}
 --- !u!114 &8514040102503809436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3943,6 +3916,33 @@ MonoBehaviour:
   pickUpLayerMask:
     serializedVersion: 2
     m_Bits: 51
+--- !u!114 &894057693496440440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764397796878741233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb9796a18f4685408f1c12445e44480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerState
+  <CurrentPlayerMovementState>k__BackingField: 0
+  <CurrentPlayerHandState>k__BackingField: 0
+--- !u!114 &8346917544264091328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764397796878741233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a37164d34f9f541957f4509268cdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerLocomotionInput
+  InteractTriggered: 0
 --- !u!1 &5780278906439986401
 GameObject:
   m_ObjectHideFlags: 0
@@ -4901,7 +4901,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6887401374277162028}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.65, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0

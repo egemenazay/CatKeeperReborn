@@ -4,8 +4,8 @@ namespace CatKeeper.Scripts
 {
     public class PlayerController : MonoBehaviour
     {
-        private PlayerLocomotionInput playerLocomotionInput;
-        private HumanPlayerInteraction humanPlayerInteraction;
+        //THIS SCRIPTS ONLY CONTROLS PLAYER MOVEMENT, MAKE INHERITED SCRIPTS FOR SPECIFIC CHARACTER 
+        protected PlayerLocomotionInput playerLocomotionInput;
         private Vector2 moveInput;
         
         [Header("Movement Settings")]
@@ -16,11 +16,10 @@ namespace CatKeeper.Scripts
         
         private Rigidbody rb;
         
-        private void Awake()
+        protected virtual void Awake()
         {
             playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
             rb = GetComponent<Rigidbody>();
-            humanPlayerInteraction = GetComponent<HumanPlayerInteraction>();
             
             rb.freezeRotation = true;
             rb.interpolation = RigidbodyInterpolation.Interpolate;
@@ -31,10 +30,9 @@ namespace CatKeeper.Scripts
         {
             HandleMovement();
         }
-        private void Update()
+        protected virtual void Update()
         {
             ReadInputs();
-            HandlePickUp();
         }
         
         private void ReadInputs()
@@ -55,17 +53,6 @@ namespace CatKeeper.Scripts
             Vector3 moveDirection = cameraTransform.forward * moveInput.y + cameraTransform.right * moveInput.x;
             moveDirection.y = 0f;
             rb.AddForce(moveDirection * walkSpeed, ForceMode.VelocityChange);
-        }
-        
-        //BOTTOM FUNCTIONS GONA BE ON INDIVIDUAL CHRACTERS SCRPITS FOR NOW ITS ONLY TESTING
-        private void HandlePickUp()
-        {
-            
-            if (playerLocomotionInput.InteractTriggered) 
-            {
-                humanPlayerInteraction.TryPickUp();
-                playerLocomotionInput.InteractTriggered = false;
-            }
         }
     }
 }

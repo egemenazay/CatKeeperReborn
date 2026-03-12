@@ -12,10 +12,10 @@ namespace CatKeeper.Scripts
     }
     public class ItemMessState : MonoBehaviour
     {
-        [Header("Dağınıklık Ayarları")]
+        [Header("Mess Point Settings")]
         public float messPenalty = 10f;
         
-        [Header("Yerleştirme Ayarları")]
+        [Header("Rest Point Settings")]
         [SerializeField] private float restVelocityThreshold = 0.5f;
         
         private bool isMessy = false;
@@ -37,7 +37,6 @@ namespace CatKeeper.Scripts
             }
         }
 
-        // Obje zone içinde kaldığı sürece her physics frame'de çalışır
         private void OnTriggerStay(Collider other)
         {
             if (!other.CompareTag(PlaceZone)) return;

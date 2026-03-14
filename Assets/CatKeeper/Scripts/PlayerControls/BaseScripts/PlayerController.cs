@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace CatKeeper.Scripts
 {
+    [RequireComponent(typeof(PlayerLocomotionInput))]
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Collider))]
     public class PlayerController : MonoBehaviour
     {
         //THIS SCRIPTS ONLY CONTROLS PLAYER MOVEMENT, MAKE INHERITED SCRIPTS FOR SPECIFIC CHARACTER 
@@ -9,7 +12,7 @@ namespace CatKeeper.Scripts
         private Vector2 moveInput;
         
         [Header("Movement Settings")]
-        [SerializeField] private float walkSpeed = 5f;
+        [SerializeField] private float walkSpeed = 1f;
 
         [Header("Camera Settings")]
         [SerializeField] private Transform cameraTransform;

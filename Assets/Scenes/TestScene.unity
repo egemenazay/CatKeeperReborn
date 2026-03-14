@@ -532,7 +532,7 @@ Transform:
   m_GameObject: {fileID: 484762413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.48767, y: 3.07461, z: 5.90789}
+  m_LocalPosition: {x: 0.37, y: 2.4099998, z: -0.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1544,28 +1544,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1568408978190683743, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1568408978190683743, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
       propertyPath: m_LinearDamping
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1568408978190683743, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
-      propertyPath: m_AngularDamping
-      value: 0.01
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2917100827392669262, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.48767
+      value: 0.37
       objectReference: {fileID: 0}
     - target: {fileID: 2917100827392669262, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.42461
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 2917100827392669262, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.90789
+      value: -0.61
       objectReference: {fileID: 0}
     - target: {fileID: 2917100827392669262, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1603,22 +1595,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 5942260186950560313, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942260186950560313, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942260186950560313, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7995801927844204603, guid: 106f83fc338c7a54d81e8ca7faeafdca, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1654,8 +1630,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612850551}
   serializedVersion: 5
-  m_Mass: 0.5
-  m_LinearDamping: 0
+  m_Mass: 1
+  m_LinearDamping: 5
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1778,7 +1754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2896951bb03a9914298f6f92f0d64bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.ObjectGrabbable
-  followSpeed: 20
+  followSpeed: 25
   grabbedFollowSpeed: 15
 --- !u!114 &1612850558
 MonoBehaviour:

@@ -7,12 +7,14 @@ namespace CatKeeper.Scripts
     [RequireComponent(typeof(Collider))]
     public class PlayerController : MonoBehaviour
     {
-        //THIS SCRIPTS ONLY CONTROLS PLAYER MOVEMENT, MAKE INHERITED SCRIPTS FOR SPECIFIC CHARACTER 
+        //THIS SCRIPTS ONLY CONTROLS PLAYER MOVEMENT, MAKE INHERITED SCRIPTS FOR SPECIFIC CHARACTERS
+        
         protected PlayerLocomotionInput playerLocomotionInput;
         private Vector2 moveInput;
         
         [Header("Movement Settings")]
-        [SerializeField] private float walkSpeed = 1f;
+        [SerializeField] private float acceleration = 5f;
+        [SerializeField] private float deceleration = 5f;
 
         [Header("Camera Settings")]
         [SerializeField] private Transform cameraTransform;
@@ -46,6 +48,8 @@ namespace CatKeeper.Scripts
         {
             Vector3 cameraForward = cameraTransform.forward;
             cameraForward.y = 0;
+            RaycastHit hit;
+            Vector3 groundNormal = Vector3.up;
             
             if (cameraForward.sqrMagnitude > 0.001f)
             {
@@ -53,9 +57,17 @@ namespace CatKeeper.Scripts
                 rb.MoveRotation(targetRotation);
             }
             
-            Vector3 moveDirection = cameraTransform.forward * moveInput.y + cameraTransform.right * moveInput.x;
-            moveDirection.y = 0f;
-            rb.AddForce(moveDirection * walkSpeed, ForceMode.VelocityChange);
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f))
+            {
+                groundNormal = hit.normal;
+            }
+            if (moveInput != Vector2.zero)
+            {
+                Vector3 moveDirection = cameraTransform.forward * moveInput.y + cameraTransform.right * moveInput.x;
+                moveDirection.y = 0f;
+                moveDirection = Vector3.ProjectOnPlane(moveDirection, groundNormal).normalized;
+                rb.AddForce(moveDirection * acceleration, ForceMode.VelocityChange);
+            }
         }
     }
 }

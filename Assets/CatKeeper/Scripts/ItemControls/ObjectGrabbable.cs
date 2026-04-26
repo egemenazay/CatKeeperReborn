@@ -7,9 +7,11 @@ namespace CatKeeper.Scripts
     {
         private Rigidbody objectRigidbody;
         private Transform objectGrabPointTransform;
+
         [Header("Object Speed Settings")]
-        [SerializeField] private float followSpeed = 15f;
-        [SerializeField] private float grabbedFollowSpeed = 15f;
+        [SerializeField] private float maxSpeed = 15f;
+        [SerializeField] private float springStrenght = 15f;
+        [SerializeField] private float rotationSpeed = 15f;
         private void Awake()
         {
             objectRigidbody = GetComponent<Rigidbody>();
@@ -22,7 +24,7 @@ namespace CatKeeper.Scripts
             objectGrabPointTransform = grabPoint;
             objectRigidbody.useGravity = false;
             
-            objectRigidbody.linearDamping = 10f; 
+            objectRigidbody.linearDamping = 5f; 
             objectRigidbody.angularDamping = 5f;
         }
 
@@ -45,32 +47,25 @@ namespace CatKeeper.Scripts
 
         private void HandeObjectPosition()
         {
-            if (objectGrabPointTransform != null)
-            {
-                // ---------------- POZİSYON HESAPLAMASI (HIZ İLE) ----------------
-                // Hedefe olan yönü ve mesafeyi bul
-                Vector3 direction = objectGrabPointTransform.position - transform.position;
-                float distance = direction.magnitude;
+            if (objectGrabPointTransform == null) return;
+            Vector3 displacement = objectGrabPointTransform.position - objectRigidbody.position;
+            Vector3 springForce  = displacement * springStrenght;
 
-                // Objeyi hedefe doğru fırlatır gibi hız veriyoruz.
-                // Mesafe ne kadar fazlaysa o kadar hızlı çeker (Yay etkisi)
-                objectRigidbody.linearVelocity = direction * followSpeed * distance; // 15f çarpanıyla oynayabilirsin
+            Vector3 dampingForce = -objectRigidbody.linearVelocity * 15f;
 
-                // ---------------- ROTASYON HESAPLAMASI (DİK DURMA) ----------------
-                
-                // Kameranın (HoldPoint) sadece Y eksenindeki açısını alıyoruz.
-                // X ve Z'yi 0 yaparak "Dik Durma"yı garantiliyoruz.
-                float targetY = objectGrabPointTransform.eulerAngles.y;
-                
-                // Hedef rotasyon: X=0 (Eğilme yok), Y=Kamera Yönü, Z=0 (Yatma yok)
-                Quaternion targetRotation = Quaternion.Euler(0f, targetY, 0f);
+            Vector3 gravityCounter = -Physics.gravity * objectRigidbody.mass;
 
-                // Şu anki açıdan hedef açıya yumuşak bir geçiş yap (Slerp)
-                Quaternion smoothedRotation = Quaternion.Slerp(objectRigidbody.rotation, targetRotation, Time.fixedDeltaTime * grabbedFollowSpeed);
-                
-                // Fiziği bozmadan döndürmek için MoveRotation kullanıyoruz
-                objectRigidbody.MoveRotation(smoothedRotation);
-            }
+            Vector3 totalForce = springForce + dampingForce + gravityCounter;
+            objectRigidbody.AddForce(totalForce, ForceMode.Force);
+
+            if (objectRigidbody.linearVelocity.magnitude > maxSpeed)
+                objectRigidbody.linearVelocity = objectRigidbody.linearVelocity.normalized * maxSpeed;
+
+            float targetY = objectGrabPointTransform.eulerAngles.y;
+            Quaternion targetRotation = Quaternion.Euler(0f, targetY, 0f);
+            objectRigidbody.MoveRotation(
+                Quaternion.Slerp(objectRigidbody.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed)
+            );
         }
     }
 }

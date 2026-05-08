@@ -6,6 +6,7 @@ namespace CatKeeper.Scripts
     {
         Idle = 0,
         Walking = 1,
+        OnAir = 3
     }
     public enum PlayerHandState 
     {
@@ -18,7 +19,7 @@ namespace CatKeeper.Scripts
         [field:SerializeField] public PlayerMovementState CurrentPlayerMovementState {get; private set;} =  PlayerMovementState.Idle;
         [field:SerializeField] public PlayerHandState CurrentPlayerHandState {get; private set;} =  PlayerHandState.Empty;
         
-        public void SetPlayerMovementState(PlayerMovementState playerMovementState)
+        public void SetPlayerMovementState(PlayerMovementState playerMovementState) //connect this to an event
         {
             CurrentPlayerMovementState = playerMovementState;
         }

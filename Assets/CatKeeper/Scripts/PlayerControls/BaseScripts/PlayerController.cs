@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CatKeeper.Scripts
@@ -10,6 +11,7 @@ namespace CatKeeper.Scripts
         //THIS SCRIPTS ONLY CONTROLS PLAYER MOVEMENT, MAKE INHERITED SCRIPTS FOR SPECIFIC CHARACTER 
         protected PlayerLocomotionInput playerLocomotionInput;
         private Vector2 moveInput;
+        private Vector2 lookInput;
         private float speedMultiplier = 5f;
         [Header("Movement Settings")]
         [SerializeField] private float walkSpeed = 1f;
@@ -36,6 +38,11 @@ namespace CatKeeper.Scripts
             rb.freezeRotation = true;
             rb.interpolation = RigidbodyInterpolation.Interpolate;
             rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        }
+
+        private void Start()
+        {
+            cameraTransform.transform.SetParent(null);
         }
 
         private void FixedUpdate()
@@ -65,6 +72,7 @@ namespace CatKeeper.Scripts
         private void ReadInputs()
         {
             moveInput = playerLocomotionInput.MovementInput;
+            lookInput = playerLocomotionInput.LookInput;
         }
         private void HandleMovement()
         {

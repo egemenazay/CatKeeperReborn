@@ -16,7 +16,6 @@ namespace CatKeeper.Scripts
         [SerializeField] private Transform cameraTransform;
         
         private PlayerLocomotionInput playerLocomotionInput;
-        private PlayerState playerState;
 
         private static int inputXHash = Animator.StringToHash("inputX");
         private static int inputYHash = Animator.StringToHash("inputY");
@@ -26,7 +25,6 @@ namespace CatKeeper.Scripts
         private void Awake()
         {
             playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
-            playerState = GetComponent<PlayerState>();
         }
 
         private void Update()
@@ -45,8 +43,6 @@ namespace CatKeeper.Scripts
 
             animator.SetFloat(inputXHash, currentBlendInput.x);
             animator.SetFloat(inputYHash, currentBlendInput.y);
-            
-            playerState.SetPlayerMovementState(PlayerMovementState.Walking);
         }
 
         private void HandleHeadMovement()

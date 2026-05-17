@@ -5,10 +5,9 @@ namespace CatKeeper.Scripts
 {
     public class HumanPlayerInteraction : MonoBehaviour
     {
-        [Header("Settings")]
-        public float pickUpRange = 3f;
-        
-        [Header("References")]
+        [Header("Pick Up Settings")]
+        [SerializeField] private float pickUpRange = 3f;
+        [Header("Pick Up References")]
         [SerializeField] private Transform objectGrabPointTransform;
         [SerializeField] private Transform playerCameraTransform;
         [SerializeField] private LayerMask pickUpLayerMask;

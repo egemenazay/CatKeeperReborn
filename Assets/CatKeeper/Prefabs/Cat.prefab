@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a37164d34f9f541957f4509268cdc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerLocomotionInput
-  InteractTriggered: 0
 --- !u!65 &6463179865948646465
 BoxCollider:
   m_ObjectHideFlags: 0

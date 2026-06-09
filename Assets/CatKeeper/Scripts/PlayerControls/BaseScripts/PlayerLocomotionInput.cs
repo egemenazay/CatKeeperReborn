@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,7 +11,7 @@ namespace CatKeeper.Scripts
         public Vector2 MovementInput { get; private set; }
         public Vector2 LookInput { get; private set; }
 
-        public bool InteractTriggered;
+        public event Action InteractPressed;
         
         private void OnEnable()
         {
@@ -41,7 +42,7 @@ namespace CatKeeper.Scripts
         {
             if (context.started)
             {
-                InteractTriggered = true;
+                InteractPressed?.Invoke();
             }
         }
         

@@ -22,6 +22,8 @@ namespace CatKeeper.Scripts
         [SerializeField] private Transform cameraTrackTarget;
         [SerializeField] private float cameraXMultiplier;
         [SerializeField] private float cameraYMultiplier;
+        [SerializeField] private GameObject visualMesh;
+        [SerializeField] private GameObject playerHeadObject;
         
         [Header("Ground Check Settings")]
         [SerializeField] private Transform groundCheckPoint;
@@ -38,11 +40,17 @@ namespace CatKeeper.Scripts
 
         public override void OnNetworkSpawn()
         {
-            base.OnNetworkSpawn();
             if (IsOwner)
             {
+                // if (visualMesh != null)
+                // {
+                //     Renderer[] renderers = visualMesh.GetComponentsInChildren<Renderer>();
+                //     foreach (Renderer rend in renderers)
+                //     {
+                //         rend.enabled = false;
+                //     }
+                // }
                 SetupCamera();
-                Debug.Log("NETWORK SPAWN SCRPIT WORKED");
             }
             else
             {
@@ -67,17 +75,20 @@ namespace CatKeeper.Scripts
 
         private void FixedUpdate()
         {
+            if (!IsOwner) return;
+            
             HandleMovement();
             HandleLook();
         }
+        
         protected virtual void Update()
         {
             if (!IsOwner) return;
-            
             ReadInputs();
             isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
             slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
         }
+        
         private void ReadInputs()
         {
             moveInput = playerLocomotionInput.MovementInput;
@@ -113,7 +124,7 @@ namespace CatKeeper.Scripts
                 rb.useGravity = false;
         
                 moveDirection = (forward * moveInput.y + right * moveInput.x).normalized;
-        
+                
                 if (!OnSlope())
                 {
                     rb.AddForce(moveDirection * (walkSpeed * speedMultiplier), ForceMode.Acceleration);   

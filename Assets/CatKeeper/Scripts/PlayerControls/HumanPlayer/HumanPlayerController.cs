@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace CatKeeper.Scripts
@@ -12,64 +12,103 @@ namespace CatKeeper.Scripts
         [SerializeField] private Transform objectGrabPointTransform;
         [SerializeField] private LayerMask pickUpLayerMask;
         
-        private ObjectGrabbable objectGrabbable;
+        private ObjectGrabbable heldObject;
         private PlayerState playerState;
         
         protected override void Awake()
         {
             base.Awake();
             playerState = GetComponent<PlayerState>();
+            playerLocomotionInput.InteractPressed += HandleInteractPressed;
         }
-        
+
+        public override void OnDestroy()
+        {
+            if (playerLocomotionInput != null)
+            {
+                playerLocomotionInput.InteractPressed -= HandleInteractPressed;
+            }
+            
+            base.OnDestroy();
+        }
+
         protected override void Update()
         {
             base.Update();
-            HandlePickUp();
+            print(objectGrabPointTransform);
         }
-        
-        private void HandlePickUp()
+        private void HandleInteractPressed()
         {
-            if (playerLocomotionInput.InteractTriggered) 
+            if (!IsOwner) return;
+
+            if (playerState.CurrentPlayerHandState == PlayerHandState.Holding)
             {
-                TryPickUp();
-                playerLocomotionInput.InteractTriggered = false;
+                DropServerRpc();
+                return;
+            }
+
+            if (TryFindPickupTarget(out ObjectGrabbable target))
+            {
+                PickUpServerRpc(new NetworkObjectReference(target.NetworkObject));
             }
         }
 
-        private void TryPickUp()
+        private bool TryFindPickupTarget(out ObjectGrabbable target)
         {
-            if (playerState.CurrentPlayerHandState == PlayerHandState.Empty)
-            { 
-                PickUp();
-            }
-            else if(playerState.CurrentPlayerHandState == PlayerHandState.Holding)
+            target = null;
+            
+            if (cinemachineCam == null) return false;
+
+            if (!Physics.Raycast(cinemachineCam.transform.position, cinemachineCam.transform.forward, out RaycastHit raycastHit, pickUpRange, pickUpLayerMask))
             {
-                Drop();
+                return false;
             }
-        }
-        
-        private void PickUp()
-        {
-            if (Physics.Raycast(cinemachineCam.transform.position, cinemachineCam.transform.forward, out RaycastHit raycastHit, pickUpRange, pickUpLayerMask))
-            {
-                if (raycastHit.transform.TryGetComponent(out objectGrabbable))
-                {
-                    objectGrabbable.Grab(objectGrabPointTransform);
-                    playerState.SetPlayerHandState(PlayerHandState.Holding);
-                }
-            }
-        }
-        private void Drop()
-        {
-            objectGrabbable.Drop();
-            objectGrabbable = null;
-            playerState.SetPlayerHandState(PlayerHandState.Empty);
+
+            target = raycastHit.transform.GetComponentInParent<ObjectGrabbable>();
+            return target != null && target.NetworkObject != null;
         }
 
-        protected override void SetupCamera()
+        [ServerRpc]
+        private void PickUpServerRpc(NetworkObjectReference targetReference)
         {
-            base.SetupCamera();
-            objectGrabPointTransform.SetParent(cinemachineCam.transform, false);
+            if (heldObject != null) return;
+            if (!targetReference.TryGet(out NetworkObject targetNetworkObject)) return;
+            if (!targetNetworkObject.TryGetComponent(out ObjectGrabbable target)) return;
+            if (target.IsGrabbed) return;
+            if (!IsTargetInPickupRange(target.transform)) return;
+
+            heldObject = target;
+            heldObject.Grab(objectGrabPointTransform);
+            SetHandStateClientRpc(PlayerHandState.Holding);
+        }
+
+        [ServerRpc]
+        private void DropServerRpc()
+        {
+            if (heldObject == null) return;
+
+            heldObject.Drop();
+            heldObject = null;
+            SetHandStateClientRpc(PlayerHandState.Empty);
+        }
+
+        [ClientRpc]
+        private void SetHandStateClientRpc(PlayerHandState handState)
+        {
+            playerState.SetPlayerHandState(handState);
+        }
+
+        private bool IsTargetInPickupRange(Transform target)
+        {
+            float maxPickupDistance = pickUpRange + 0.5f;
+            Vector3 pickupOrigin = objectGrabPointTransform != null ? objectGrabPointTransform.position : transform.position;
+            
+            if (Vector3.Distance(pickupOrigin, target.position) <= maxPickupDistance)
+            {
+                return true;
+            }
+
+            return Vector3.Distance(transform.position, target.position) <= maxPickupDistance;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ namespace CatKeeper.Scripts
     {
         [Header("Pick Up Settings")]
         [SerializeField] private float pickUpRange = 3f;
+        [SerializeField] private float grabPointDistance = 2f;
+        [SerializeField] private float verticalOffset = 0f;
+        [SerializeField] private float smoothSpeed = 3f;
         [Header("Pick Up References")]
         [SerializeField] private Transform objectGrabPointTransform;
         [SerializeField] private LayerMask pickUpLayerMask;
@@ -32,11 +36,11 @@ namespace CatKeeper.Scripts
             base.OnDestroy();
         }
 
-        protected override void Update()
+        private void LateUpdate()
         {
-            base.Update();
-            print(objectGrabPointTransform);
+            HandePickUpPosition();
         }
+
         private void HandleInteractPressed()
         {
             if (!IsOwner) return;
@@ -52,7 +56,29 @@ namespace CatKeeper.Scripts
                 PickUpServerRpc(new NetworkObjectReference(target.NetworkObject));
             }
         }
+        
+        private void HandePickUpPosition()
+        {
+            if (!IsOwner)
+                return;
 
+            if (objectGrabPointTransform == null || cinemachineCam == null)
+                return;
+
+            Vector3 targetPosition =
+                cinemachineCam.transform.position +
+                cinemachineCam.transform.forward * grabPointDistance +
+                Vector3.up * verticalOffset;
+
+            objectGrabPointTransform.position = Vector3.Lerp(
+                objectGrabPointTransform.position,
+                targetPosition,
+                Time.deltaTime * smoothSpeed
+            );
+
+            objectGrabPointTransform.rotation = Quaternion.LookRotation(cinemachineCam.transform.forward, Vector3.up);
+        }
+        
         private bool TryFindPickupTarget(out ObjectGrabbable target)
         {
             target = null;

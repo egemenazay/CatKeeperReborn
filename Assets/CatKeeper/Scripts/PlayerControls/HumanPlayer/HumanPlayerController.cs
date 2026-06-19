@@ -38,7 +38,7 @@ namespace CatKeeper.Scripts
 
         private void LateUpdate()
         {
-            HandePickUpPosition();
+            HandlePickUpPosition();
         }
 
         private void HandleInteractPressed()
@@ -53,11 +53,15 @@ namespace CatKeeper.Scripts
 
             if (TryFindPickupTarget(out ObjectGrabbable target))
             {
-                PickUpServerRpc(new NetworkObjectReference(target.NetworkObject));
+                PickUpServerRpc(
+                    new NetworkObjectReference(target.NetworkObject),
+                    objectGrabPointTransform.localPosition,
+                    objectGrabPointTransform.localRotation
+                );
             }
         }
         
-        private void HandePickUpPosition()
+        private void HandlePickUpPosition()
         {
             if (!IsOwner)
                 return;
@@ -68,15 +72,24 @@ namespace CatKeeper.Scripts
             Vector3 targetPosition =
                 cinemachineCam.transform.position +
                 cinemachineCam.transform.forward * grabPointDistance +
-                Vector3.up * verticalOffset;
-
-            objectGrabPointTransform.position = Vector3.Lerp(
-                objectGrabPointTransform.position,
-                targetPosition,
-                Time.deltaTime * smoothSpeed
-            );
+                Vector3.up * verticalOffset; 
+            
+            objectGrabPointTransform.position = targetPosition;
+            // objectGrabPointTransform.position = Vector3.Lerp(
+            //     objectGrabPointTransform.position,
+            //     targetPosition,
+            //     Time.deltaTime * smoothSpeed
+            // );
 
             objectGrabPointTransform.rotation = Quaternion.LookRotation(cinemachineCam.transform.forward, Vector3.up);
+
+            if (!IsServer && IsSpawned && playerState.CurrentPlayerHandState == PlayerHandState.Holding)
+            {
+                UpdateGrabPointServerRpc(
+                    objectGrabPointTransform.localPosition,
+                    objectGrabPointTransform.localRotation
+                );
+            }
         }
         
         private bool TryFindPickupTarget(out ObjectGrabbable target)
@@ -95,12 +108,18 @@ namespace CatKeeper.Scripts
         }
 
         [ServerRpc]
-        private void PickUpServerRpc(NetworkObjectReference targetReference)
+        private void PickUpServerRpc(
+            NetworkObjectReference targetReference,
+            Vector3 grabPointLocalPosition,
+            Quaternion grabPointLocalRotation
+        )
         {
             if (heldObject != null) return;
             if (!targetReference.TryGet(out NetworkObject targetNetworkObject)) return;
             if (!targetNetworkObject.TryGetComponent(out ObjectGrabbable target)) return;
             if (target.IsGrabbed) return;
+
+            ApplyGrabPointPose(grabPointLocalPosition, grabPointLocalRotation);
             if (!IsTargetInPickupRange(target.transform)) return;
 
             heldObject = target;
@@ -116,6 +135,23 @@ namespace CatKeeper.Scripts
             heldObject.Drop();
             heldObject = null;
             SetHandStateClientRpc(PlayerHandState.Empty);
+        }
+
+        [ServerRpc(Delivery = RpcDelivery.Unreliable)]
+        private void UpdateGrabPointServerRpc(Vector3 localPosition, Quaternion localRotation)
+        {
+            if (heldObject == null) return;
+
+            ApplyGrabPointPose(localPosition, localRotation);
+        }
+
+        private void ApplyGrabPointPose(Vector3 localPosition, Quaternion localRotation)
+        {
+            if (objectGrabPointTransform == null) return;
+
+            float maxLocalDistance = pickUpRange + 1f;
+            objectGrabPointTransform.localPosition = Vector3.ClampMagnitude(localPosition, maxLocalDistance);
+            objectGrabPointTransform.localRotation = localRotation.normalized;
         }
 
         [ClientRpc]

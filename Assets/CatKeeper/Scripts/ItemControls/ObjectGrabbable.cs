@@ -9,11 +9,16 @@ namespace CatKeeper.Scripts
     {
         private Rigidbody objectRigidbody;
         private Transform objectGrabPointTransform;
+        private Vector3 previousGrabPointPosition;
+        private bool hasPreviousGrabPointPosition;
+        private bool isSteady;
 
         [Header("Object Speed Settings")]
         [SerializeField] private float maxSpeed = 15f;
         [SerializeField] private float springStrength = 15f;
         [SerializeField] private float rotationSpeed = 15f;
+        [SerializeField] private float steadyDistance = 0.05f;
+        [SerializeField] private float objectAngularDamping = 15f;
         private void Awake()
         {
             objectRigidbody = GetComponent<Rigidbody>();
@@ -24,10 +29,13 @@ namespace CatKeeper.Scripts
         public void Grab(Transform grabPoint)
         {
             objectGrabPointTransform = grabPoint;
+            previousGrabPointPosition = grabPoint.position;
+            hasPreviousGrabPointPosition = true;
+            isSteady = false;
             objectRigidbody.useGravity = false;
-            
-            objectRigidbody.linearDamping = 5f; 
-            objectRigidbody.angularDamping = 15f;
+
+            objectRigidbody.linearDamping = 0f;
+            objectRigidbody.angularDamping = objectAngularDamping;
         }
 
         public bool IsGrabbed => objectGrabPointTransform != null;
@@ -35,6 +43,8 @@ namespace CatKeeper.Scripts
         public void Drop()
         {
             objectGrabPointTransform = null;
+            hasPreviousGrabPointPosition = false;
+            isSteady = false;
             objectRigidbody.useGravity = true;
             
             objectRigidbody.linearDamping = 0f;
@@ -43,21 +53,53 @@ namespace CatKeeper.Scripts
 
         private void FixedUpdate()
         {
-           HandeObjectPosition();
+            HandleObjectPosition();
         }
 
-        private void HandeObjectPosition()
+        private void HandleObjectPosition()
         {
             if (objectGrabPointTransform == null) return;
+
+            float fixedDeltaTime = Time.fixedDeltaTime;
+            Vector3 grabPointPosition = objectGrabPointTransform.position;
+            Vector3 grabPointVelocity = hasPreviousGrabPointPosition
+                ? (grabPointPosition - previousGrabPointPosition) / fixedDeltaTime
+                : Vector3.zero;
+
+            previousGrabPointPosition = grabPointPosition;
+            hasPreviousGrabPointPosition = true;
+
             Vector3 displacement = objectGrabPointTransform.position - objectRigidbody.position;
-            Vector3 springForce  = displacement * springStrength;
+            float distance = displacement.magnitude;
 
-            Vector3 dampingForce = -objectRigidbody.linearVelocity;
+            if (isSteady)
+            {
+                isSteady = distance <= steadyDistance * 2f;
+            }
+            else
+            {
+                isSteady = distance <= steadyDistance;
+            }
 
-            Vector3 totalForce = springForce + dampingForce;
-            objectRigidbody.AddForce(totalForce, ForceMode.Force);
+            if (isSteady)
+            {
+                Vector3 correctionVelocity = displacement / fixedDeltaTime;
+                objectRigidbody.linearVelocity = Vector3.ClampMagnitude(
+                    grabPointVelocity + correctionVelocity,
+                    maxSpeed
+                );
+            }
+            else
+            {
+                float criticalDamping = 2f * Mathf.Sqrt(springStrength * objectRigidbody.mass);
+                Vector3 relativeVelocity = objectRigidbody.linearVelocity - grabPointVelocity;
+                Vector3 springForce = displacement * springStrength;
+                Vector3 dampingForce = -relativeVelocity * criticalDamping;
 
-            if (objectRigidbody.linearVelocity.magnitude > maxSpeed)
+                objectRigidbody.AddForce(springForce + dampingForce, ForceMode.Force);
+            }
+
+            if (objectRigidbody.linearVelocity.sqrMagnitude > maxSpeed * maxSpeed)
                 objectRigidbody.linearVelocity = objectRigidbody.linearVelocity.normalized * maxSpeed;
 
             float targetY = objectGrabPointTransform.eulerAngles.y;

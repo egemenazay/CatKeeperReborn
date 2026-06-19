@@ -3922,7 +3922,7 @@ MonoBehaviour:
   pickUpRange: 3
   grabPointDistance: 1
   verticalOffset: 0
-  smoothSpeed: 5
+  smoothSpeed: 0
   objectGrabPointTransform: {fileID: 5517059215278789127}
   pickUpLayerMask:
     serializedVersion: 2

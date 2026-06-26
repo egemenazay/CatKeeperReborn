@@ -2222,7 +2222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1467963603902446236, guid: ba24838c304c5f1459a39f839647633b, type: 3}
       propertyPath: maxSpeed
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1467963603902446236, guid: ba24838c304c5f1459a39f839647633b, type: 3}
       propertyPath: rotationSpeed
@@ -2234,7 +2234,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1467963603902446236, guid: ba24838c304c5f1459a39f839647633b, type: 3}
       propertyPath: springStrength
-      value: 60
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467963603902446236, guid: ba24838c304c5f1459a39f839647633b, type: 3}
+      propertyPath: steadyDistance
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467963603902446236, guid: ba24838c304c5f1459a39f839647633b, type: 3}
+      propertyPath: objectLinearDamping
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3356866165433221331, guid: ba24838c304c5f1459a39f839647633b, type: 3}
       propertyPath: AuthorityMode

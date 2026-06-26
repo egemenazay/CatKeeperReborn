@@ -11,13 +11,11 @@ namespace CatKeeper.Scripts
         private Transform objectGrabPointTransform;
         private Vector3 previousGrabPointPosition;
         private bool hasPreviousGrabPointPosition;
-        private bool isSteady;
 
         [Header("Object Speed Settings")]
         [SerializeField] private float maxSpeed = 15f;
         [SerializeField] private float springStrength = 15f;
         [SerializeField] private float rotationSpeed = 15f;
-        [SerializeField] private float steadyDistance = 0.05f;
         [SerializeField] private float objectAngularDamping = 15f;
         private void Awake()
         {
@@ -31,7 +29,6 @@ namespace CatKeeper.Scripts
             objectGrabPointTransform = grabPoint;
             previousGrabPointPosition = grabPoint.position;
             hasPreviousGrabPointPosition = true;
-            isSteady = false;
             objectRigidbody.useGravity = false;
 
             objectRigidbody.linearDamping = 0f;
@@ -44,7 +41,6 @@ namespace CatKeeper.Scripts
         {
             objectGrabPointTransform = null;
             hasPreviousGrabPointPosition = false;
-            isSteady = false;
             objectRigidbody.useGravity = true;
             
             objectRigidbody.linearDamping = 0f;
@@ -70,34 +66,13 @@ namespace CatKeeper.Scripts
             hasPreviousGrabPointPosition = true;
 
             Vector3 displacement = objectGrabPointTransform.position - objectRigidbody.position;
-            float distance = displacement.magnitude;
 
-            if (isSteady)
-            {
-                isSteady = distance <= steadyDistance * 2f;
-            }
-            else
-            {
-                isSteady = distance <= steadyDistance;
-            }
+            float criticalDamping = 2f * Mathf.Sqrt(springStrength * objectRigidbody.mass);
+            Vector3 relativeVelocity = objectRigidbody.linearVelocity - grabPointVelocity;
+            Vector3 springForce = displacement * springStrength;
+            Vector3 dampingForce = -relativeVelocity * criticalDamping;
 
-            if (isSteady)
-            {
-                Vector3 correctionVelocity = displacement / fixedDeltaTime;
-                objectRigidbody.linearVelocity = Vector3.ClampMagnitude(
-                    grabPointVelocity + correctionVelocity,
-                    maxSpeed
-                );
-            }
-            else
-            {
-                float criticalDamping = 2f * Mathf.Sqrt(springStrength * objectRigidbody.mass);
-                Vector3 relativeVelocity = objectRigidbody.linearVelocity - grabPointVelocity;
-                Vector3 springForce = displacement * springStrength;
-                Vector3 dampingForce = -relativeVelocity * criticalDamping;
-
-                objectRigidbody.AddForce(springForce + dampingForce, ForceMode.Force);
-            }
+            objectRigidbody.AddForce(springForce + dampingForce, ForceMode.Force);
 
             if (objectRigidbody.linearVelocity.sqrMagnitude > maxSpeed * maxSpeed)
                 objectRigidbody.linearVelocity = objectRigidbody.linearVelocity.normalized * maxSpeed;

@@ -42,14 +42,7 @@ namespace CatKeeper.Scripts
         {
             if (IsOwner)
             {
-                // if (visualMesh != null)
-                // {
-                //     Renderer[] renderers = visualMesh.GetComponentsInChildren<Renderer>();
-                //     foreach (Renderer rend in renderers)
-                //     {
-                //         rend.enabled = false;
-                //     }
-                // }
+                SetLocalOwnerVisualsVisible(false);
                 SetupCamera();
             }
             else
@@ -60,6 +53,17 @@ namespace CatKeeper.Scripts
                 {
                     playerLocomotionInput.enabled = false;
                 }
+            }
+        }
+
+        private void SetLocalOwnerVisualsVisible(bool isVisible)
+        {
+            if (visualMesh == null) return;
+
+            Renderer[] renderers = visualMesh.GetComponentsInChildren<Renderer>(true);
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.enabled = isVisible;
             }
         }
 

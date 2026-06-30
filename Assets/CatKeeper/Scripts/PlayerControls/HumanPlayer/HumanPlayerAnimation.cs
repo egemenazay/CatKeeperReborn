@@ -1,9 +1,9 @@
-using System;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace CatKeeper.Scripts
 {
-    public class HumanPlayerAnimation : MonoBehaviour
+    public class HumanPlayerAnimation : NetworkBehaviour
     {
         [Header("Settings")]
         [SerializeField] private float locomotionBlendSpeed = 4f;
@@ -21,6 +21,12 @@ namespace CatKeeper.Scripts
         private static int inputYHash = Animator.StringToHash("inputY");
         
         private Vector3 currentBlendInput = Vector3.zero;
+        private Vector2 lastSentMovementInput = Vector2.zero;
+        private NetworkVariable<Vector2> networkMovementInput = new(
+            Vector2.zero,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
 
         private void Awake()
         {
@@ -39,10 +45,53 @@ namespace CatKeeper.Scripts
 
         private void UpdateAnimationState()
         {
-            currentBlendInput = Vector3.Lerp(currentBlendInput, playerLocomotionInput.MovementInput, locomotionBlendSpeed * Time.deltaTime);
+            Vector2 targetMovementInput = GetTargetMovementInput();
+
+            currentBlendInput = Vector3.Lerp(currentBlendInput, targetMovementInput, locomotionBlendSpeed * Time.deltaTime);
 
             animator.SetFloat(inputXHash, currentBlendInput.x);
             animator.SetFloat(inputYHash, currentBlendInput.y);
+        }
+
+        private Vector2 GetTargetMovementInput()
+        {
+            if (!IsSpawned)
+            {
+                return playerLocomotionInput.MovementInput;
+            }
+
+            if (!IsOwner)
+            {
+                return networkMovementInput.Value;
+            }
+
+            Vector2 movementInput = playerLocomotionInput.MovementInput;
+            SyncMovementInput(movementInput);
+            return movementInput;
+        }
+
+        private void SyncMovementInput(Vector2 movementInput)
+        {
+            if ((movementInput - lastSentMovementInput).sqrMagnitude <= 0.0001f)
+            {
+                return;
+            }
+
+            lastSentMovementInput = movementInput;
+
+            if (IsServer)
+            {
+                networkMovementInput.Value = movementInput;
+                return;
+            }
+
+            UpdateMovementInputServerRpc(movementInput);
+        }
+
+        [ServerRpc]
+        private void UpdateMovementInputServerRpc(Vector2 movementInput)
+        {
+            networkMovementInput.Value = movementInput;
         }
 
         private void HandleHeadMovement()

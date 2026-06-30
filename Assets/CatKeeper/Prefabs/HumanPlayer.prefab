@@ -3828,7 +3828,7 @@ Rigidbody:
   m_GameObject: {fileID: 5764397796878741233}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 7
+  m_LinearDamping: 10
   m_AngularDamping: 0.01
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -3866,9 +3866,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.3
-  m_Height: 2
+  m_Height: 1.8989134
   m_Direction: 1
-  m_Center: {x: 0, y: 0.95, z: 0}
+  m_Center: {x: 0, y: 0.9482484, z: 0}
 --- !u!114 &1394172412188709031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3922,7 +3922,6 @@ MonoBehaviour:
   pickUpRange: 3
   grabPointDistance: 1
   verticalOffset: 0
-  smoothSpeed: 0
   objectGrabPointTransform: {fileID: 5517059215278789127}
   pickUpLayerMask:
     serializedVersion: 2
@@ -3939,6 +3938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f06dc9a9a39844aa3a4071f65694fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatKeeper.Scripts.PlayerAnimation
+  ShowTopMostFoldoutHeaderGroup: 1
   locomotionBlendSpeed: 10
   invertZ: 1
   zOffset: 0

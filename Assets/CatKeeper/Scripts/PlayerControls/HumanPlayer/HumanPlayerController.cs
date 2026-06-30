@@ -10,7 +10,6 @@ namespace CatKeeper.Scripts
         [SerializeField] private float pickUpRange = 3f;
         [SerializeField] private float grabPointDistance = 2f;
         [SerializeField] private float verticalOffset = 0f;
-        [SerializeField] private float smoothSpeed = 3f;
         [Header("Pick Up References")]
         [SerializeField] private Transform objectGrabPointTransform;
         [SerializeField] private LayerMask pickUpLayerMask;
